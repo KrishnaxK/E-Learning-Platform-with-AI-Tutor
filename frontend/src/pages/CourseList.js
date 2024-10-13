@@ -1,30 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// src/pages/CourseList.js
+import React from 'react';
+import useFetch from '../hooks/useFetch';
 import CourseCard from '../components/CourseCard';
 
 const CourseList = () => {
-  const [courses, setCourses] = useState([]);
+  // Use the useFetch hook to fetch courses from your API
+  const { data: courses, loading, error } = useFetch('http://localhost:5000/courses');
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/courses');
-        setCourses(response.data);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      }
-    };
-
-    fetchCourses();
-  }, []);
+  if (loading) return <div>Loading...</div>; // Show loading state
+  if (error) return <div>Error fetching courses: {error.message}</div>; // Handle errors
 
   return (
     <div>
       <h2>Available Courses</h2>
       <div className="course-list">
-        {courses.map((course) => (
-          <CourseCard key={course._id} course={course} />
-        ))}
+        {courses && courses.length > 0 ? (
+          courses.map((course) => (
+            <CourseCard key={course._id} course={course} />
+          ))
+        ) : (
+          <p>No courses available.</p>
+        )}
       </div>
     </div>
   );
