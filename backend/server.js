@@ -4,6 +4,9 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const tutorRoutes = require('./routes/tutorRoutes');
+const connectDB = require('./config/db');
+
+connectDB(); // Call this to establish the MongoDB connection
 
 dotenv.config();
 

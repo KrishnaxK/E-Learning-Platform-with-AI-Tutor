@@ -1,10 +1,9 @@
-// backend/models/Enrollment.js
 const mongoose = require('mongoose');
 
-const enrollmentSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
-    enrolledAt: { type: Date, default: Date.now },
+const EnrollmentSchema = new mongoose.Schema({
+  student: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
+  progress: { type: Number, default: 0 },
 });
 
-module.exports = mongoose.model('Enrollment', enrollmentSchema);
+module.exports = mongoose.model('Enrollment', EnrollmentSchema);

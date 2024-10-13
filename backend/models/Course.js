@@ -1,12 +1,10 @@
-// backend/models/Course.js
 const mongoose = require('mongoose');
 
-const courseSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    instructor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    materials: [{ type: String }], // URLs to video lectures or resources
-    createdAt: { type: Date, default: Date.now },
+const CourseSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  instructor: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  content: [{ type: String }],
 });
 
-module.exports = mongoose.model('Course', courseSchema);
+module.exports = mongoose.model('Course', CourseSchema);

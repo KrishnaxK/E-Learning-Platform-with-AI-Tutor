@@ -1,11 +1,27 @@
-// backend/models/User.js
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const { hashPassword } = require('../utils/password');
 
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, default: 'student' }, // 'student' or 'instructor'
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await hashPassword(this.password);
+  next();
 });
 
-module.exports = mongoose.model('User', userSchema);
+
+const UserSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['student', 'instructor'], default: 'student' },
+});
+
+// Hash password before saving the user
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+module.exports = mongoose.model('User', UserSchema);
