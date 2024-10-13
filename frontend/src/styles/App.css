@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    background-color: #007bff;
+    padding: 1rem;
+  }
+  
+  .navbar a {
+    color: white;
+    margin: 0 1rem;
+    text-decoration: none;
+  }
+  
+  .course-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .course-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 1rem;
+    padding: 1rem;
+    width: 200px;
+  }
+  
